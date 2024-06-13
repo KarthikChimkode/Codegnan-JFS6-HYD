@@ -1,0 +1,116 @@
+
+		@media only screen and (max-width:576px){
+        #box {
+			
+			display: none;
+		}
+        }  
+        .logo {
+            position: fixed;
+        }
+		#box{
+			position: relative;
+			height: 30px;
+			margin-bottom: 40px;
+			/* margin-right:10px; */
+			top: 0px; 
+			/*  Change that for vertical alignement. If OK as is, delete. */
+		}
+		h4{
+			color: grey;
+			display: none;
+			margin-top:-20px;
+			margin-left: 50px;
+		}
+		.a :hover h4{
+			display: block;
+		}
+        
+	     body{
+			background-color: black;
+		 }
+		.a div{
+			position: fixed;
+			margin-left: 0px;
+			width: 100px;
+			height: 60px;
+			padding: 20px;	
+		} 
+		
+		h4{
+			color: grey;
+			display: none;
+			margin-top:-20px;
+			margin-left: 50px;
+		}
+		.a :hover h4{
+			display: block;
+		}
+	
+		iframe {
+			border-radius: 10px;
+			border-color: grey;
+			
+		}
+		.b {
+			margin-top: 0px;
+			margin-bottom: 100px;
+		}
+		.b1 {
+			margin-top: 100px;
+			margin-bottom: 200px;	
+		}
+		
+		.b2 {
+			
+			margin-bottom: 100px;
+			display: grid;
+			grid-template-columns: auto auto auto auto;
+			column-gap: 50px;
+		}
+		.b3 {
+			
+			margin-bottom: 100px;
+			display: grid;
+			grid-template-columns: auto auto auto auto;
+			column-gap: 50px;
+		}
+		.b4 {
+			
+			margin-bottom: 100px;
+			display: grid;
+			grid-template-columns: auto auto auto auto;
+			column-gap: 50px;
+		}
+		.b5 {	
+			margin-bottom: 100px;
+			display: grid;
+			grid-template-columns: auto auto auto auto;
+			column-gap: 50px;
+			
+		}
+		
+		.abc {
+			display: flex;
+			column-gap: 150px;
+		
+		}
+		h2 {
+			color: white;
+			text-decoration-line: underline;
+		}
+		 h4{
+			display: none;
+			margin-top:-20px;
+			margin-left: 50px;
+		}
+		.a :hover h4{
+			display: block;
+		}
+        .image:hover{
+			transform: scale(1.5);
+		}
+      
+    
+   
+	
