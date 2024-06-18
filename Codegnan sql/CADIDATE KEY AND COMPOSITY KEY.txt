@@ -1,0 +1,67 @@
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| company            |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| product_details    |
+| sales              |
+| sys                |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> CODEGNAN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CODEGNAN' at line 1
+mysql> USE CODEGNAN;
+Database changed
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| animals            |
+| codegnan_emp       |
+| mytable            |
+| orders             |
+| persons            |
+| persons1           |
+| persons2           |
+| persons3           |
+| products           |
+| shirtbrands        |
+| student            |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> CREATE TABLE STUDENTS(
+    -> STUDENT_ID INT,
+    -> FIRST_NAME VARCHAR(50),
+    -> LAST_NAME VARCHAR(50),
+    -> PRIMARY KEY(STUDENT_ID),
+    -> UNIQUE KEY(FIRST_NAME, LAST_NAME)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO STUDENTS(STUDENT_ID, FIRST_NAME, LAST_NAME)
+    -> VALUES
+    -> (1,'JOHN','DOE'),
+    -> (2,'JANE','SMITH'),
+    -> (3,'ALICE','JOHNSON');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECR * FROM STUDENTS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECR * FROM STUDENTS' at line 1
+mysql> SELECT * FROM STUDENTS;
++------------+------------+-----------+
+| STUDENT_ID | FIRST_NAME | LAST_NAME |
++------------+------------+-----------+
+|          3 | ALICE      | JOHNSON   |
+|          2 | JANE       | SMITH     |
+|          1 | JOHN       | DOE       |
++------------+------------+-----------+
+3 rows in set (0.00 sec)

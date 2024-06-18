@@ -1,0 +1,443 @@
+SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE DATABASE CODEGNAN;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE CODEGNAN;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(EMP ID CHAR(5),
+    -> FNAME VARCHAR(50),
+    -> LNAME VARCHAR(50),
+    -> AGE INT, DOJ DATE,
+    -> ADDRESS TINYTEXT,
+    -> DEPT VARCHAR(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ID CHAR(5),
+FNAME VARCHAR(50),
+LNAME VARCHAR(50),
+AGE INT, DOJ DATE,
+ADDRESS TIN' at line 1
+mysql> USE CODEGNAN;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(EMP ID CHAR(5),
+    ->     -> FNAME VARCHAR(50),
+    ->     -> LNAME VARCHAR(50),
+    ->     -> AGE INT, DOJ DATE,
+    ->     -> ADDRESS TINYTEXT,
+    ->     -> FNAME VARCHAR(50),CREATE TABLE EMPLOYEES(EMP_ID CHAR(5),
+    ->     -> FNAME VARCHAR(50),
+    ->     -> LNAME VARCHAR(50),
+    ->     -> AGE INT, DOJ DATE,
+    ->     -> ADDRESS TINYTEXT,
+    -> ^C
+mysql> USE CODEGNAN;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(EMP_ID CHAR(5),
+    ->     -> FNAME VARCHAR(50),
+    ->     -> LNAME VARCHAR(50),
+    ->     -> AGE INT, DOJ DATE,
+    ->     -> ADDRESS TINYTEXT,
+    ->     -> DEPT VARCHAR(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> FNAME VARCHAR(50),
+    -> LNAME VARCHAR(50),
+    -> AGE INT, DOJ DATE,
+    ->' at line 2
+mysql> cls
+    -> ^C
+mysql> cls
+    -> ^C
+mysql> USE CODEGNAN;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(EMP_ID CHAR(5),
+    -> FNAME VARCHAR(50),
+    -> LNAME VARCHAR(50),
+    -> AGE INT, DOJ DATE,
+    -> ADDRESS TINYTEXT,
+    -> DEPT VARCHAR(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW TABLES
+    -> ^C
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| employees          |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC EMPLOYEES;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EMP_ID  | char(5)     | YES  |     | NULL    |       |
+| FNAME   | varchar(50) | YES  |     | NULL    |       |
+| LNAME   | varchar(50) | YES  |     | NULL    |       |
+| AGE     | int         | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| ADDRESS | tinytext    | YES  |     | NULL    |       |
+| DEPT    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> MODIFY FNAME VARCHAR(30);
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EMP_ID  | char(5)     | YES  |     | NULL    |       |
+| FNAME   | varchar(30) | YES  |     | NULL    |       |
+| LNAME   | varchar(50) | YES  |     | NULL    |       |
+| AGE     | int         | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| ADDRESS | tinytext    | YES  |     | NULL    |       |
+| DEPT    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> ADD LOCATION TINYTEXT;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | char(5)     | YES  |     | NULL    |       |
+| FNAME    | varchar(30) | YES  |     | NULL    |       |
+| LNAME    | varchar(50) | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| ADDRESS  | tinytext    | YES  |     | NULL    |       |
+| DEPT     | varchar(20) | YES  |     | NULL    |       |
+| LOCATION | tinytext    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> ADD PFID AFTER ADDRESS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AFTER ADDRESS' at line 2
+mysql> ALTER TABLE EMPLOYEES
+    -> ADD PFID INT AFTER ADDRESS
+    -> ;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES
+    -> ;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | char(5)     | YES  |     | NULL    |       |
+| FNAME    | varchar(30) | YES  |     | NULL    |       |
+| LNAME    | varchar(50) | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| ADDRESS  | tinytext    | YES  |     | NULL    |       |
+| PFID     | int         | YES  |     | NULL    |       |
+| DEPT     | varchar(20) | YES  |     | NULL    |       |
+| LOCATION | tinytext    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> RENAME COLUMN FNAME TO FIRST_NAME;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES
+    -> ,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',' at line 2
+mysql> DESC EMPLOYEES;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LNAME      | varchar(50) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| PFID       | int         | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
+| LOCATION   | tinytext    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> CHANGE LNAME TO LAST_NAME VARCHAR(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO LAST_NAME VARCHAR(30)' at line 2
+mysql> ALTER TABLE EMPLOYEES
+    -> CHANGE COLUMN LNAME TO LAST_NAME VARCHAR(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO LAST_NAME VARCHAR(30)' at line 2
+mysql> ALTER TABLE EMPLOYEES
+    -> CHANGE COLUMN LNAME LAST_NAME VARCHAR(60);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES
+    -> ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| PFID       | int         | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
+| LOCATION   | tinytext    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES
+    -> DROP COLUMN LOCATION;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEES RENAME CODEGNAN_EMP;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC CODEGNAN_EMP
+    -> ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| PFID       | int         | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> DESC EMPLOYEES
+    -> ;
+ERROR 1146 (42S02): Table 'codegnan.employees' doesn't exist
+mysql> CREATE TABLE DEPARTMENT(
+    -> DEPT ID CHAR(30),
+    -> DEPT_NAME VARCHAR(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ID CHAR(30),
+DEPT_NAME VARCHAR(50))' at line 2
+mysql> CREATE TABLE DEPARTMENT(
+    -> DEPT_ID CHAR(3),
+    -> DEPT_NAME VARCHAR(50),
+    -> MANGER_ID CHAR(5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> CREATE TABLE DEPARTMENT(
+    -> DEPT_ID CHAR(3),
+    -> DEPT_NAME VARCHAR(50),
+    -> DEPT_ID CHAR(3),^C
+mysql> CREATE TABLE DEPARTMENT(
+    -> DEPT_ID CHAR(3) PRIMARY KEY,
+    -> DEPT_NAME VARCHAR(50),
+    -> MANGER_ID CHAR(5));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC CODEGNAN_EMP;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| PFID       | int         | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> desc department;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| DEPT_ID   | char(3)     | NO   | PRI | NULL    |       |
+| DEPT_NAME | varchar(50) | YES  |     | NULL    |       |
+| MANGER_ID | char(5)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| codegnan_emp       |
+| department         |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE DEPARTMENT;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW TABLES
+    -> ;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| codegnan_emp       |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC CODEGNAN_EMP;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| PFID       | int         | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE CODEGNAN_EMP
+    -> DROP COLUMN PFID;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC CPDEGNAN_EMP;
+ERROR 1146 (42S02): Table 'codegnan.cpdegnan_emp' doesn't exist
+mysql> DESC CODEGNAN_EMP;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRST_NAME, LAST_NAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E001', 'JOHN', 'DOE', 30, '2023-01-01', '123 MAIN ST', 'IT'),
+    -> ('E001', 'JANE', 'SMITH', 25, '2023-02-15', '456 OAK ST', 'HR'),
+    -> ALTER TABLE CODEGNAN_EMP^C
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRST_NAME, LAST_NAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E001', 'JOHN', 'DOE', 30, '2023-01-01', '123 MAIN ST', 'IT'),
+    -> ('E002', 'JANE', 'SMITH', 25, '2023-02-15', '456 OAK ST', 'HR'),
+    -> ('E003', 'BOB', 'JOHNSON', 35, '2022-12-10', '789 PINE ST', 'FINANCE');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>  SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   30 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM CODEGNAN_EMP
+    -> WHERE EMP_ID = 'E001';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> DELETE FROM CODEGNAN_EMP
+    -> WHERE AGE > 30;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+------------+------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS    | DEPT |
++--------+------------+-----------+------+------------+------------+------+
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST | HR   |
++--------+------------+-----------+------+------------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRST_NAME, LAST_NAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E001', 'JOHN', 'DOE', 30, '2023-01-01', '123 MAIN ST', 'IT'),
+    -> ('E003', 'BOB', 'JOHNSON', 35, '2022-12-10', '789 PINE ST', 'FINANCE');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E001   | JOHN       | DOE       |   30 | 2023-01-01 | 123 MAIN ST | IT      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM CODEGNAN_EMP
+    -> ;
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> SELECT FROM * CODEGNAN_EMP;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM * CODEGNAN_EMP' at line 1
+mysql> SELECT * FROM CODEGNAN_EMP;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRST_NAME, LAST_NAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E001', 'JOHN', 'DOE', 30, '2023-01-01', '123 MAIN ST', 'IT'),
+    -> ('E002', 'JANE', 'SMITH', 25, '2023-02-15', '456 OAK ST', 'HR'),
+    -> ('E003', 'BOB', 'JOHNSON', 35, '2022-12-10', '789 PINE ST', 'FINANCE');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   30 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)

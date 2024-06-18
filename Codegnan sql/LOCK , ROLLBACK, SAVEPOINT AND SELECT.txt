@@ -1,0 +1,329 @@
+Microsoft Windows [Version 10.0.22631.3447]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\karth>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE CODEGNAN;
+Database changed
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| codegnan_emp       |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   30 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> -- LOCK
+mysql> SET TRANSACTION ISOLATION LEVEL READ COMMITED;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COMMITED' at line 1
+mysql> SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE EMP_ID = 'E001' FOR UPDATE;
++--------+------------+-----------+------+------------+-------------+------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT |
++--------+------------+-----------+------+------------+-------------+------+
+| E001   | JOHN       | DOE       |   30 | 2023-01-01 | 123 MAIN ST | IT   |
++--------+------------+-----------+------+------------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE CODEGNAN_EMP SET AGE = 40 WHERE EMP_ID = 'E001';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> -- ROLLBACK
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE CODEGNAN_EMP SET AGE = 50 WHERE EMP_ID = 'E001';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   50 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRSTNAME, LASTNAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E004', 'ALICE', 'JOHN', 28, '2021-12-01', '555 EM ST', 'MARKETING');
+ERROR 1054 (42S22): Unknown column 'FIRSTNAME' in 'field list'
+mysql> INSERT INTO CODEGNAN_EMP(EMP_ID, FIRST_NAME, LAST_NAME, AGE, DOJ, ADDRESS, DEPT)
+    -> VALUES
+    -> ('E004', 'ALICE', 'JOHN', 28, '2021-12-01', '555 EM ST', 'MARKETING');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+-----------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT      |
++--------+------------+-----------+------+------------+-------------+-----------+
+| E001   | JOHN       | DOE       |   50 | 2023-01-01 | 123 MAIN ST | IT        |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR        |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE   |
+| E004   | ALICE      | JOHN      |   28 | 2021-12-01 | 555 EM ST   | MARKETING |
++--------+------------+-----------+------+------------+-------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE CODEGNAN
+Database changed
+mysql> DESC CODEGNAN
+    -> ;
+ERROR 1146 (42S02): Table 'codegnan.codegnan' doesn't exist
+mysql> DESC CODEGNAN_EMP;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMP_ID     | char(5)     | YES  |     | NULL    |       |
+| FIRST_NAME | varchar(30) | YES  |     | NULL    |       |
+| LAST_NAME  | varchar(60) | YES  |     | NULL    |       |
+| AGE        | int         | YES  |     | NULL    |       |
+| DOJ        | date        | YES  |     | NULL    |       |
+| ADDRESS    | tinytext    | YES  |     | NULL    |       |
+| DEPT       | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> USE CODEGNAN;
+Database changed
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> -- LOCK
+mysql> SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE EMP_ID  = 'E002' FOR UPDATE;
+^C -- query aborted
+ERROR 1317 (70100): Query execution was interrupted
+mysql>
+mysql> SELECT * FROM CODEGNAN_EMP WHERE EMP_ID  = 'E002' FOR UPDATE;
++--------+------------+-----------+------+------------+------------+------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS    | DEPT |
++--------+------------+-----------+------+------------+------------+------+
+| E002   | JANE       | SMITH     |   25 | 2023-02-15 | 456 OAK ST | HR   |
++--------+------------+-----------+------+------------+------------+------+
+1 row in set (43.27 sec)
+
+mysql> UPDATE CODEGNAN_EMP SET AGE = 30 WHERE EMP_ID = 'E002';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> -- ROLLBACK
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE CODEGNAN_EMP SET AGE = 50 WHERE EMP_ID = 'E001';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   50 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> ROLLBACK
+    -> ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT & FROM CODEGNAN_EMP;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '& FROM CODEGNAN_EMP' at line 1
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   40 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> -- SAVEPOINT
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE CODEGNAN_EMP SET AGE = 20 WHERE EMP_ID = 'E001';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SAVEPOINT MY_SAVEPOINT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ROLLBACK TO SAVEPOINT MY_SAVEPOINT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ROLLBACK TO SAVEPOINT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ROLLBACK TO SAVEPOINT MY_SAVEPOINT;
+ERROR 1305 (42000): SAVEPOINT MY_SAVEPOINT does not exist
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID, FIRST_NAME, LAST_NAME FROM CODEGNAN_EMP;
++--------+------------+-----------+
+| EMP_ID | FIRST_NAME | LAST_NAME |
++--------+------------+-----------+
+| E001   | JOHN       | DOE       |
+| E002   | JANE       | SMITH     |
+| E003   | BOB        | JOHNSON   |
++--------+------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN WHERE AGE > 30;
+ERROR 1146 (42S02): Table 'codegnan.codegnan' doesn't exist
+mysql> SELECT * FROM CODEGNAN_EMP WHERE AGE > 30;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,222 @@
+mysql> CREATE DATABASE COMPANY;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE COMAPANY;
+ERROR 1049 (42000): Unknown database 'comapany'
+mysql> USE COMPANY;
+Database changed
+mysql> CREATE TABLE EMOPLOYEES(
+    -> ID INT PRIMARY KEY,
+    -> NAME VARCHAR(255),
+    -> DEPARTMENT VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> ALTER TABLE EMOPLOYEES
+    -> CHANGE TABLE NAME TO EMPLOYEES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE NAME TO EMPLOYEES' at line 2
+mysql> CREATE TABLE SALARIES(
+    -> ID INT PRIMARY KEY,
+    -> EMPLOYEE_ID INT,
+    -> SALARY INT,
+    -> FOREIGN KEY(EMPLOYEE_ID) REFERENCES EMPLOYEES(ID)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'employees'
+mysql> CREATE TABLE SALARIES(
+    -> ID INT PRIMARY KEY,
+    -> EMPLOYEE_ID INT,
+    -> SALARY INT,
+    -> FOREIGN KEY(EMPLOYEE_ID) REFERENCES EMOPLOYEES(ID)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| company            |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| product_details    |
+| sales              |
+| sys                |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> USE COMPANY
+Database changed
+mysql> ALTER TABLE EMOPLOYEES
+    -> RENAME TO EMPLOYEES;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC SALARIES;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| ID          | int  | NO   | PRI | NULL    |       |
+| EMPLOYEE_ID | int  | YES  | MUL | NULL    |       |
+| SALARY      | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(ID, NAME, DEPARTMENT)VALUES
+    -> (1,'ALICE','HR'),
+    -> (2,'BOB','IT'),
+    -> (3,'CHARLIE','SALES');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SALARIES(ID, EMPLOYEE_ID, SALARY)VALUES
+    -> (1,1,50000),
+    -> (2,2,60000),
+    -> (3,3,45000);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEES CROSS JOIN SALARIES;
++----+---------+------------+----+-------------+--------+
+| ID | NAME    | DEPARTMENT | ID | EMPLOYEE_ID | SALARY |
++----+---------+------------+----+-------------+--------+
+|  3 | CHARLIE | SALES      |  1 |           1 |  50000 |
+|  2 | BOB     | IT         |  1 |           1 |  50000 |
+|  1 | ALICE   | HR         |  1 |           1 |  50000 |
+|  3 | CHARLIE | SALES      |  2 |           2 |  60000 |
+|  2 | BOB     | IT         |  2 |           2 |  60000 |
+|  1 | ALICE   | HR         |  2 |           2 |  60000 |
+|  3 | CHARLIE | SALES      |  3 |           3 |  45000 |
+|  2 | BOB     | IT         |  3 |           3 |  45000 |
+|  1 | ALICE   | HR         |  3 |           3 |  45000 |
++----+---------+------------+----+-------------+--------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT EMPLOYEES.ID, NAME, DEPARTMENT, SALARY
+    -> FROM EMPLOYEES
+    -> INNER JOIN SALARIES ON EMPLOYEES.ID = SALARIES.EMPLOYEE_ID;
++----+---------+------------+--------+
+| ID | NAME    | DEPARTMENT | SALARY |
++----+---------+------------+--------+
+|  1 | ALICE   | HR         |  50000 |
+|  2 | BOB     | IT         |  60000 |
+|  3 | CHARLIE | SALES      |  45000 |
++----+---------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMP(
+    -> ENAME VARCHAR(255),
+    -> DEPTNO INT
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE TABLE DEPT(
+    -> DNAME VARCHAR(255),
+    -> DEPTNO INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO EMP(ENAME,DEPTNO) VALUES
+    -> ('A', 20),
+    -> ('B', NULL),
+    -> ('C',10),
+    -> ('D', NULL);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO DEPT(DNAME, DEPTNO) VALUES
+    -> ('D1',10),
+    -> ('D2',20),
+    -> ('D3',30),
+    -> ('D4',40);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMP;
++-------+--------+
+| ENAME | DEPTNO |
++-------+--------+
+| A     |     20 |
+| B     |   NULL |
+| C     |     10 |
+| D     |   NULL |
++-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM DEPT;
++-------+--------+
+| DNAME | DEPTNO |
++-------+--------+
+| D1    |     10 |
+| D2    |     20 |
+| D3    |     30 |
+| D4    |     40 |
++-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> -- LEFT OUTER JOIN
+mysql> SELECT * FROM EMP
+    -> LEFT JOIN DEPT ON
+    -> EMP.COLUMN = DEPT.COLUMN;
+ERROR 1054 (42S22): Unknown column 'EMP.COLUMN' in 'on clause'
+mysql> SELECT * FROM EMP
+    -> LEFT JOIN DEPT ON
+    -> EMP.COLUNM = DEPT.COLUNM;
+ERROR 1054 (42S22): Unknown column 'EMP.COLUNM' in 'on clause'
+mysql> SELECT * FROM EMP
+    -> LEFT JOIN DEPT ON
+    -> EMP.DEPTNO = DEPT.DEPTNO;
++-------+--------+-------+--------+
+| ENAME | DEPTNO | DNAME | DEPTNO |
++-------+--------+-------+--------+
+| A     |     20 | D2    |     20 |
+| B     |   NULL | NULL  |   NULL |
+| C     |     10 | D1    |     10 |
+| D     |   NULL | NULL  |   NULL |
++-------+--------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMP
+    -> RIGHT JOIN DEPT ON
+    -> EMP.DEPTNO = DEPT.DEPTNO;
++-------+--------+-------+--------+
+| ENAME | DEPTNO | DNAME | DEPTNO |
++-------+--------+-------+--------+
+| C     |     10 | D1    |     10 |
+| A     |     20 | D2    |     20 |
+| NULL  |   NULL | D3    |     30 |
+| NULL  |   NULL | D4    |     40 |
++-------+--------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> --LEFT JOIN
+    -> ^C
+mysql> -- LEFT JOIN
+mysql> SELECT EMP.ENAME, EMP.DEPTNO, DEPT.DNAME
+    -> FROM EMP
+    -> LEFT JOIN DEPT ON
+    -> EMP.DEPTNO = DEPT.DEPTNO;
++-------+--------+-------+
+| ENAME | DEPTNO | DNAME |
++-------+--------+-------+
+| A     |     20 | D2    |
+| B     |   NULL | NULL  |
+| C     |     10 | D1    |
+| D     |   NULL | NULL  |
++-------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> -- RIGHT JOIN
+mysql> SELECT EMP.ENAME, EMP.DEPTNO, DEPT.DNAME
+    -> FROM EMP
+    -> RIGHT JOIN DEPT ON
+    -> EMP.DEPTNO = DEPT.DEPTNO;
++-------+--------+-------+
+| ENAME | DEPTNO | DNAME |
++-------+--------+-------+
+| C     |     10 | D1    |
+| A     |     20 | D2    |
+| NULL  |   NULL | D3    |
+| NULL  |   NULL | D4    |
++-------+--------+-------+
+4 rows in set (0.00 sec)

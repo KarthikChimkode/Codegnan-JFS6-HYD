@@ -1,0 +1,439 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| product_details    |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE CODEGNAN;
+Database changed
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| codegnan_emp       |
+| mytable            |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE STUDENT(
+    -> ID INTEGER,
+    -> FIRTNAME TEXT NOT NULL,
+    -> LASTNAME TEXT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC STUDENT;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| ID       | int  | YES  |     | NULL    |       |
+| FIRTNAME | text | NO   |     | NULL    |       |
+| LASTNAME | text | NO   |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES(1,'HANKS','PETER');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM STUDENT;
++------+----------+----------+
+| ID   | FIRTNAME | LASTNAME |
++------+----------+----------+
+|    1 | HANKS    | PETER    |
++------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES(2,NULL,'PETER');
+ERROR 1048 (23000): Column 'FIRTNAME' cannot be null
+mysql> INSERT INTO STUDENT VALUES(NULL,'HANKS','PETER');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM STUDENT;
++------+----------+----------+
+| ID   | FIRTNAME | LASTNAME |
++------+----------+----------+
+|    1 | HANKS    | PETER    |
+| NULL | HANKS    | PETER    |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PERSONS(
+    -> ID INT NOT NULL,
+    -> NAME VARCHAR(45) NOT NULL,
+    -> AGE INT,
+    -> CITY VARCHAR(25) DEFUALT 'NEWYORK');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEFUALT 'NEWYORK')' at line 5
+mysql> CREATE TABLE PERSONS(
+    -> ID INT NOT NULL,
+    -> NAME VARCHAR(45) NOT NULL,
+    -> AGE INT,
+    -> CITY VARCHAR(25) DEFAULT 'NEWYORK');
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC PERSONS;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int         | NO   |     | NULL    |       |
+| NAME  | varchar(45) | NO   |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
+| CITY  | varchar(25) | YES  |     | NEWYORK |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO PERSONS(ID, NAME, AGE, CITY)
+    -> VALUES
+    -> (1, 'ROBERT', 15, 'FLORIDA'),
+    -> Z, 'JOSEPH', 35, 'CALIFORNIA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Z, 'JOSEPH', 35, 'CALIFORNIA')' at line 4
+mysql> INSERT INTO PERSONS(ID, NAME, AGE, CITY)
+    -> VALUES
+    -> (1, 'ROBERT', 15, 'FLORIDA'),
+    -> (2, 'JOSEPH', 35, 'CALIFORNIA');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PERSONS;
++----+--------+------+------------+
+| ID | NAME   | AGE  | CITY       |
++----+--------+------+------------+
+|  1 | ROBERT |   15 | FLORIDA    |
+|  2 | JOSEPH |   35 | CALIFORNIA |
++----+--------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO PERSONS(ID, NAME, AGE, CITY)
+    -> VALUES
+    -> (1,'PETER',15);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO PERSONS(ID, NAME, AGE)
+    -> VALUES
+    -> (1,'PETER',15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM PERSONS;
++----+--------+------+------------+
+| ID | NAME   | AGE  | CITY       |
++----+--------+------+------------+
+|  1 | ROBERT |   15 | FLORIDA    |
+|  2 | JOSEPH |   35 | CALIFORNIA |
+|  1 | PETER  |   15 | NEWYORK    |
++----+--------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PERSONS1(
+    -> ID INT NOT NULL PRIMARY KEY,
+    -> NAME VARCHAR(45) NOT NULL,
+    -> AGE INT,
+    -> CITY VARCHAR(25));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC PERSONS1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int         | NO   | PRI | NULL    |       |
+| NAME  | varchar(45) | NO   |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
+| CITY  | varchar(25) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO PERSONS1(ID, NAME, AGE, CITY)
+    -> VALUES
+    -> (1, 'A', 15, 'HYD'),
+    -> (2, 'B', 35, 'USA'),
+    -> (3, 'C', 40, 'UK');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PERSONS1;
++----+------+------+------+
+| ID | NAME | AGE  | CITY |
++----+------+------+------+
+|  1 | A    |   15 | HYD  |
+|  2 | B    |   35 | USA  |
+|  3 | C    |   40 | UK   |
++----+------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO PERSONS1(ID, NAME, AGE, CITY)
+    -> VALUES
+    -> (1, 'D', 25, 'HYD');
+ERROR 1062 (23000): Duplicate entry '1' for key 'persons1.PRIMARY'
+mysql> SELECT * FROM PERSONS1;
++----+------+------+------+
+| ID | NAME | AGE  | CITY |
++----+------+------+------+
+|  1 | A    |   15 | HYD  |
+|  2 | B    |   35 | USA  |
+|  3 | C    |   40 | UK   |
++----+------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SHIRTBRANDS(
+    -> ID INTEGER,
+    -> BRANDNAME VARCHAR(40) UNIQUE,
+    -> SIZE VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> DESC SHIRTBRANDS;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| ID        | int         | YES  |     | NULL    |       |
+| BRANDNAME | varchar(40) | YES  | UNI | NULL    |       |
+| SIZE      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO SHIRTBRANDS(ID, BRANDNAME, SIZE)
+    -> VALUES
+    -> (1, 'PANTALOONS', 38),
+    -> (2, 'CANTABIL', 48);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SHIRTBRANDS(ID, BRANDNAME, SIZE)
+    -> VALUES
+    -> (3, 'PANTALOONS', 42),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> INSERT INTO SHIRTBRANDS(ID, BRANDNAME, SIZE)
+    -> VALUES
+    -> (3, 'PANTALOONS', 42);
+ERROR 1062 (23000): Duplicate entry 'PANTALOONS' for key 'shirtbrands.BRANDNAME'
+mysql> INSERT INTO SHIRTBRANDS(ID, BRANDNAME, SIZE)
+    -> VALUES
+    -> (1, 'RAYMONDS', 38);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM SHIRTBRANDS;
++------+------------+------+
+| ID   | BRANDNAME  | SIZE |
++------+------------+------+
+|    1 | PANTALOONS | 38   |
+|    2 | CANTABIL   | 48   |
+|    1 | RAYMONDS   | 38   |
++------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE ANIMALS(
+    -> ID INT NOT NULL AUTO_INCREMENT,
+    -> NAME CHAR(30) NOT NULL,
+    -> PRIMARY KEY(ID)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC ANIMALS;
++-------+----------+------+-----+---------+----------------+
+| Field | Type     | Null | Key | Default | Extra          |
++-------+----------+------+-----+---------+----------------+
+| ID    | int      | NO   | PRI | NULL    | auto_increment |
+| NAME  | char(30) | NO   |     | NULL    |                |
++-------+----------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO ANIMALS(NAME) VALUES
+    -> ('TIGER'),('DOG'),('PENGUIN'),('CAT'),('ELEPHANT')
+    -> ;
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ANIMALS;
++----+----------+
+| ID | NAME     |
++----+----------+
+|  1 | TIGER    |
+|  2 | DOG      |
+|  3 | PENGUIN  |
+|  4 | CAT      |
+|  5 | ELEPHANT |
++----+----------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| product_details    |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> USE CODEGNAN;
+Database changed
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_codegnan |
++--------------------+
+| animals            |
+| codegnan_emp       |
+| mytable            |
+| persons            |
+| persons1           |
+| shirtbrands        |
+| student            |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> CREATE TABLE PERSONS2;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE PERSONS2(
+    -> ID INT NOT NULL,
+    -> NAME VARCHAR(45) NOT NULL,
+    -> AGE INT CHECK(AGE >= 18)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC PERSONS2
+    -> ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int         | NO   |     | NULL    |       |
+| NAME  | varchar(45) | NO   |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> INSERT INTO PERSONS2(ID, NAME, AGE)
+    -> VALUES
+    -> (1, 'A', 15);
+ERROR 3819 (HY000): Check constraint 'persons2_chk_1' is violated.
+mysql> INSERT INTO PERSONS2(ID, NAME, AGE)
+    -> VALUES
+    -> (1, 'A', 18);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM PERSONS2;
++----+------+------+
+| ID | NAME | AGE  |
++----+------+------+
+|  1 | A    |   18 |
++----+------+------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE PERSONS3;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE PERSONS3(
+    -> PERSON_ID INT NOT NULL PRIMARY KEY,
+    -> NAME VARCHAR(50),
+    -> AGE INT,
+    -> CITY VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC PERSONS3
+    -> ;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| PERSON_ID | int         | NO   | PRI | NULL    |       |
+| NAME      | varchar(50) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| CITY      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO PERSONS3(PERSON_ID, NAME, AGE , CITY)
+    -> VALUES
+    -> (1,'A',15,'UK')
+    -> (2,'B',40,'USA'),
+    -> (3,'C',40,'AUS');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(2,'B',40,'USA'),
+(3,'C',40,'AUS')' at line 4
+mysql> INSERT INTO PERSONS3(PERSON_ID, NAME, AGE , CITY)
+    -> VALUES
+    -> (1,'A',15,'UK'),
+    -> (2,'B',40,'USA'),
+    -> (3,'C',40,'AUS');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PERSONS3;
++-----------+------+------+------+
+| PERSON_ID | NAME | AGE  | CITY |
++-----------+------+------+------+
+|         1 | A    |   15 | UK   |
+|         2 | B    |   40 | USA  |
+|         3 | C    |   40 | AUS  |
++-----------+------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE ORDERS(
+    -> ORDER_ID INT NOT NULL PRIMARY KEY,
+    -> ORDER_NUM INT NOT NULL,
+    -> PERSON_ID INT,
+    -> FOREIGN KEY(PERSON_ID) REFERNCES PERSON3(PERSON_ID)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERNCES PERSON3(PERSON_ID)
+)' at line 5
+mysql> CREATE TABLE ORDERS(
+    -> ORDER_ID INT NOT NULL PRIMARY KEY,
+    -> ORDER_NUM INT NOT NULL,
+    -> PERSON_ID INT,
+    -> FOREIGN KEY(PERSON_ID) REFERENCES PERSON3(PERSON_ID)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'person3'
+mysql> CREATE TABLE ORDERS(
+    -> ORDER_ID INT NOT NULL PRIMARY KEY,
+    -> ORDER_NUM INT NOT NULL,
+    -> PERSON_ID INT,
+    -> FOREIGN KEY(PERSON_ID) REFERENCES PERSONS3(PERSON_ID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSER INTO ORDERS(ORDER_ID, ORDER_NUM, PERSON_ID)
+    -> VALUES
+    -> (1, 5544, 2),
+    -> (2, 3324, 3)
+    -> (2, 3324, 3),
+    -> (4,3451,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSER INTO ORDERS(ORDER_ID, ORDER_NUM, PERSON_ID)
+VALUES
+(1, 5544, 2),
+(2, 3324,' at line 1
+mysql> INSER INTO ORDERS(ORDER_ID, ORDER_NUM, PERSON_ID)
+    -> VALUES
+    -> (1, 5544, 2),
+    -> (2, 3324, 3),
+    -> (3, 2135, 2),
+    -> (4,3451,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSER INTO ORDERS(ORDER_ID, ORDER_NUM, PERSON_ID)
+VALUES
+(1, 5544, 2),
+(2, 3324,' at line 1
+mysql> INSERT INTO ORDERS(ORDER_ID, ORDER_NUM, PERSON_ID)
+    -> VALUES
+    -> (1, 5544, 2),
+    -> (2, 3324, 3),
+    -> (3, 2135, 2),
+    -> (4,3451,1);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ORDERS;
++----------+-----------+-----------+
+| ORDER_ID | ORDER_NUM | PERSON_ID |
++----------+-----------+-----------+
+|        1 |      5544 |         2 |
+|        2 |      3324 |         3 |
+|        3 |      2135 |         2 |
+|        4 |      3451 |         1 |
++----------+-----------+-----------+
+4 rows in set (0.00 sec)

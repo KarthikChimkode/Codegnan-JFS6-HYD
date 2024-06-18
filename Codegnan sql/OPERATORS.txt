@@ -1,0 +1,398 @@
+mysql> USE CODEGNAN;
+Database changed
+mysql> SELECT * FROM CODEGNAN_EMP;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.02 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE AGE = 35;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE AGE != 30;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DOJ <= 2023-12-10;
+Empty set, 1 warning (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DOJ <= '2023-12-10';
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DOJ <= '2022-12-10';
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DOJ >= '2022-12-10';
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE AGE BETWEEN 25 AND 50;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN EMP WHERE DEPT IN('HR', 'FINANCE');
+ERROR 1146 (42S02): Table 'codegnan.codegnan' doesn't exist
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DEPT IN('HR', 'FINANCE');
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE DEPT NOT IN('HR', 'FINANCE');
++--------+------------+-----------+------+------------+-------------+------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT |
++--------+------------+-----------+------+------------+-------------+------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT   |
++--------+------------+-----------+------+------------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE IS NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IS NULL' at line 1
+mysql> SELECT * FROM CODEGNAN_EMP WHERE EMP_ID IS NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM CODEGNAN_EMP WHERE EMP_ID IS NOT NULL;
++--------+------------+-----------+------+------------+-------------+---------+
+| EMP_ID | FIRST_NAME | LAST_NAME | AGE  | DOJ        | ADDRESS     | DEPT    |
++--------+------------+-----------+------+------------+-------------+---------+
+| E001   | JOHN       | DOE       |   20 | 2023-01-01 | 123 MAIN ST | IT      |
+| E002   | JANE       | SMITH     |   30 | 2023-02-15 | 456 OAK ST  | HR      |
+| E003   | BOB        | JOHNSON   |   35 | 2022-12-10 | 789 PINE ST | FINANCE |
++--------+------------+-----------+------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE LIBRARYDB;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE LIBRARYDB;
+Database changed
+mysql> CREATE TABLE BOOKS(
+    -> BOOK_ID INT PRIMARY KEY,
+    -> TITLE VARCHAT(100),
+    -> AUTHOR VARCHAR(50),
+    -> GENRE VARCHAR(50),
+    -> PUBLICATION_YEAR INT,
+    -> PRICE DECIMAL(8,2)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAT(100),
+AUTHOR VARCHAR(50),
+GENRE VARCHAR(50),
+PUBLICATION_YEAR INT,
+PRICE' at line 3
+mysql> CREATE TABLE BOOKS(
+    -> BOOK_ID INT PRIMARY KEY,
+    -> TITLE VARCHAR(100),
+    -> AUTHOR VARCHAR(50),
+    -> GENRE VARCHAR(50),
+    -> PUBLICATION_YEAR INT,
+    -> PRICE DECIMAL(8,2)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC BOOKS;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| BOOK_ID          | int          | NO   | PRI | NULL    |       |
+| TITLE            | varchar(100) | YES  |     | NULL    |       |
+| AUTHOR           | varchar(50)  | YES  |     | NULL    |       |
+| GENRE            | varchar(50)  | YES  |     | NULL    |       |
+| PUBLICATION_YEAR | int          | YES  |     | NULL    |       |
+| PRICE            | decimal(8,2) | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> DESC CODEGNAN_EMP;
+ERROR 1146 (42S02): Table 'librarydb.codegnan_emp' doesn't exist
+mysql> INSERT INTO BOOKS(BOOK_ID, TITLE, AUTHOR, GENRE, PUBLICATION_YEAR, PRICE)
+    -> VALUES
+    -> (1, 'THE GREAT GATSBY', 'F.SCOTT', 'FICTION', 1925, 99),
+    -> (2, 'TO KILL BIRD', 'HARPER LEE', 'FICTION', 1960, 12.50),
+    -> (2, 'TO KILL BIRD', 'HARPER LEE', 'FICTION', 1960, 10),
+    -> ^C
+mysql> INSERT INTO BOOKS(BOOK_ID, TITLE, AUTHOR, GENRE, PUBLICATION_YEAR, PRICE)
+    -> (1, 'THE GREAT GATSBY', 'F.SCOTT', 'FICTION', 1925, 15.99),
+    -> (2, 'TO KILL BIRD', 'HARPER LEE', 'FICTION', 1960, 12.50),
+    -> (3, '1984', 'GEORGE', 'DYSTOPIAN', 1949, 10.99),
+    -> (4, 'THE CATCHER', 'J.D.SALINGER', 'FICTION', 1951, 14.75);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 'THE GREAT GATSBY', 'F.SCOTT', 'FICTION', 1925, 15.99),
+(2, 'TO KILL BIRD', '' at line 2
+mysql> INSERT INTO BOOKS(BOOK_ID, TITLE, AUTHOR, GENRE, PUBLICATION_YEAR, PRICE)
+    -> VALUES
+    -> (1, 'THE GREAT GATSBY', 'F.SCOTT', 'FICTION', 1925, 15.99),
+    -> (2, 'TO KILL BIRD', 'HARPER LEE', 'FICTION', 1960, 12.50),
+    -> (3, '1984', 'GEORGE', 'DYSTOPIAN', 1949, 10.99),
+    -> (4, 'THE CATCHER', 'J.D.SALINGER', 'FICTION', 1951, 14.75);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM BOOKS
+    -> ;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 15.99 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 | 12.50 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 10.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 | 14.75 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE BOOKS SET PRICE = PRICE + 5.00;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> SELECT * FROM BOOKS
+    -> ;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 20.99 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 | 17.50 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 15.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 | 19.75 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE BOOKS SET PRICE = PRICE - 3.00 WHERE PUBLICATION_YEAR < 1960;
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT * FROM BOOKS;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 17.99 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 | 17.50 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 | 16.75 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE BOOKS SET PRICE = PRICE * 2.00 WHERE GENRE = 'FICTION';
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT * FROM BOOKS;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 | 35.00 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 | 33.50 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE BOOKS SET PRICE = PRICE / 2.00 WHERE PUBLICATION_YEAR > 1950;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT * FROM BOOKS;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 | 17.50 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 | 16.75 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE BOOKS SET PRICE = 9.99 WHERE BOOK_ID % 2 = 0;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT * FROM BOOKS;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 |  9.99 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 |  9.99 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION = 1960;
+ERROR 1054 (42S22): Unknown column 'PUBLICATION' in 'where clause'
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR = 1960;
++---------+--------------+------------+---------+------------------+-------+
+| BOOK_ID | TITLE        | AUTHOR     | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+--------------+------------+---------+------------------+-------+
+|       2 | TO KILL BIRD | HARPER LEE | FICTION |             1960 |  9.99 |
++---------+--------------+------------+---------+------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE != 'FICTION';
++---------+-------+--------+-----------+------------------+-------+
+| BOOK_ID | TITLE | AUTHOR | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+-------+--------+-----------+------------------+-------+
+|       3 | 1984  | GEORGE | DYSTOPIAN |             1949 | 12.99 |
++---------+-------+--------+-----------+------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PRICE < 15;
++---------+--------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE        | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+--------------+--------------+-----------+------------------+-------+
+|       2 | TO KILL BIRD | HARPER LEE   | FICTION   |             1960 |  9.99 |
+|       3 | 1984         | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER  | J.D.SALINGER | FICTION   |             1951 |  9.99 |
++---------+--------------+--------------+-----------+------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE > 15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '> 15' at line 1
+mysql> SELECT * FROM BOOKS WHERE PRICE > 15;
++---------+------------------+---------+---------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR  | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+------------------+---------+---------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT | FICTION |             1925 | 35.98 |
++---------+------------------+---------+---------+------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR <= 1950;
++---------+------------------+---------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR  | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+---------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT | FICTION   |             1925 | 35.98 |
+|       3 | 1984             | GEORGE  | DYSTOPIAN |             1949 | 12.99 |
++---------+------------------+---------+-----------+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR >= 1950;
++---------+--------------+--------------+---------+------------------+-------+
+| BOOK_ID | TITLE        | AUTHOR       | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+--------------+--------------+---------+------------------+-------+
+|       2 | TO KILL BIRD | HARPER LEE   | FICTION |             1960 |  9.99 |
+|       4 | THE CATCHER  | J.D.SALINGER | FICTION |             1951 |  9.99 |
++---------+--------------+--------------+---------+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR BETWEEN 1950 AND 1960;
++---------+--------------+--------------+---------+------------------+-------+
+| BOOK_ID | TITLE        | AUTHOR       | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+--------------+--------------+---------+------------------+-------+
+|       2 | TO KILL BIRD | HARPER LEE   | FICTION |             1960 |  9.99 |
+|       4 | THE CATCHER  | J.D.SALINGER | FICTION |             1951 |  9.99 |
++---------+--------------+--------------+---------+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR NOT BETWEEN 1950 AND 1960;
++---------+------------------+---------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR  | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+---------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT | FICTION   |             1925 | 35.98 |
+|       3 | 1984             | GEORGE  | DYSTOPIAN |             1949 | 12.99 |
++---------+------------------+---------+-----------+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE IN ('FICTION', 'SCIENCE');
++---------+------------------+--------------+---------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+---------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION |             1960 |  9.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION |             1951 |  9.99 |
++---------+------------------+--------------+---------+------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE NOT IN ('FICTION', 'SCIENCE');
++---------+-------+--------+-----------+------------------+-------+
+| BOOK_ID | TITLE | AUTHOR | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+-------+--------+-----------+------------------+-------+
+|       3 | 1984  | GEORGE | DYSTOPIAN |             1949 | 12.99 |
++---------+-------+--------+-----------+------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR IS NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NULL' at line 1
+mysql> SELECT * FROM BOOKS WHERE PUBLICATION_YEAR IS NOT NULL;
++---------+------------------+--------------+-----------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+-----------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION   |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION   |             1960 |  9.99 |
+|       3 | 1984             | GEORGE       | DYSTOPIAN |             1949 | 12.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION   |             1951 |  9.99 |
++---------+------------------+--------------+-----------+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE = 'FICTION' AND PRICE > 15.00;
++---------+------------------+---------+---------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR  | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+------------------+---------+---------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT | FICTION |             1925 | 35.98 |
++---------+------------------+---------+---------+------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE = 'FICTION' AND PRICE = 15.00;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE = 'SCIENCE' AND PRICE = 15.00;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE = 'FICTION' OR GENRE = 'SCIENCE FICTION';
++---------+------------------+--------------+---------+------------------+-------+
+| BOOK_ID | TITLE            | AUTHOR       | GENRE   | PUBLICATION_YEAR | PRICE |
++---------+------------------+--------------+---------+------------------+-------+
+|       1 | THE GREAT GATSBY | F.SCOTT      | FICTION |             1925 | 35.98 |
+|       2 | TO KILL BIRD     | HARPER LEE   | FICTION |             1960 |  9.99 |
+|       4 | THE CATCHER      | J.D.SALINGER | FICTION |             1951 |  9.99 |
++---------+------------------+--------------+---------+------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE GENRE = 'FANTASY' OR GENRE = 'SCIENCE FICTION';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM BOOKS WHERE NOT GENRE = 'FICTION';
++---------+-------+--------+-----------+------------------+-------+
+| BOOK_ID | TITLE | AUTHOR | GENRE     | PUBLICATION_YEAR | PRICE |
++---------+-------+--------+-----------+------------------+-------+
+|       3 | 1984  | GEORGE | DYSTOPIAN |             1949 | 12.99 |
++---------+-------+--------+-----------+------------------+-------+
+1 row in set (0.00 sec)

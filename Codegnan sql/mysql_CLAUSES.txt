@@ -1,0 +1,164 @@
+mysql> SHOW DATABAES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABAES' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| codegnan           |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| product_details    |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE CODEGNAN;
+Database changed
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCT_ID INT PRIMARY KEY,
+    -> PRODUCT_NAME VARCHAR(50) NOT NULL,
+    -> CATEGORY VARCHAR(30) NOT NULL,
+    -> PRICE DECIMAL(10,2) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> DESC PRODUCTS;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| PRODUCT_ID   | int           | NO   | PRI | NULL    |       |
+| PRODUCT_NAME | varchar(50)   | NO   |     | NULL    |       |
+| CATEGORY     | varchar(30)   | NO   |     | NULL    |       |
+| PRICE        | decimal(10,2) | NO   |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO PRODUCTS VALUES
+    -> (1, 'LAPTOP', 'ELECTRONICS', 1200.00),
+    -> (2, 'HEADPHONE', 'ELECTRONICS', 50.00),
+    -> (3, 'COFFEE MAKER', 'APPLIANCES', 80.00),
+    -> (4, 'RUNNING SHOES', 'CLOTHING', 75.00),
+    -> (5, 'BACKUP', 'ACCESSORIES', 40.00);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PRODUCTS;
++------------+---------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME  | CATEGORY    | PRICE   |
++------------+---------------+-------------+---------+
+|          1 | LAPTOP        | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE     | ELECTRONICS |   50.00 |
+|          3 | COFFEE MAKER  | APPLIANCES  |   80.00 |
+|          4 | RUNNING SHOES | CLOTHING    |   75.00 |
+|          5 | BACKUP        | ACCESSORIES |   40.00 |
++------------+---------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT CATEGORY FROM PRODUCTS;
++-------------+
+| CATEGORY    |
++-------------+
+| ELECTRONICS |
+| APPLIANCES  |
+| CLOTHING    |
+| ACCESSORIES |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS ORDER BY PRICE DESC;
++------------+---------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME  | CATEGORY    | PRICE   |
++------------+---------------+-------------+---------+
+|          1 | LAPTOP        | ELECTRONICS | 1200.00 |
+|          3 | COFFEE MAKER  | APPLIANCES  |   80.00 |
+|          4 | RUNNING SHOES | CLOTHING    |   75.00 |
+|          2 | HEADPHONE     | ELECTRONICS |   50.00 |
+|          5 | BACKUP        | ACCESSORIES |   40.00 |
++------------+---------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS ORDER BY PRICE ASC;
++------------+---------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME  | CATEGORY    | PRICE   |
++------------+---------------+-------------+---------+
+|          5 | BACKUP        | ACCESSORIES |   40.00 |
+|          2 | HEADPHONE     | ELECTRONICS |   50.00 |
+|          4 | RUNNING SHOES | CLOTHING    |   75.00 |
+|          3 | COFFEE MAKER  | APPLIANCES  |   80.00 |
+|          1 | LAPTOP        | ELECTRONICS | 1200.00 |
++------------+---------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS;
++------------+---------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME  | CATEGORY    | PRICE   |
++------------+---------------+-------------+---------+
+|          1 | LAPTOP        | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE     | ELECTRONICS |   50.00 |
+|          3 | COFFEE MAKER  | APPLIANCES  |   80.00 |
+|          4 | RUNNING SHOES | CLOTHING    |   75.00 |
+|          5 | BACKUP        | ACCESSORIES |   40.00 |
++------------+---------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS LIMIT 2;
++------------+--------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME | CATEGORY    | PRICE   |
++------------+--------------+-------------+---------+
+|          1 | LAPTOP       | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE    | ELECTRONICS |   50.00 |
++------------+--------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE PRODUCT_NAME LIKE 'L%';
++------------+--------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME | CATEGORY    | PRICE   |
++------------+--------------+-------------+---------+
+|          1 | LAPTOP       | ELECTRONICS | 1200.00 |
++------------+--------------+-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE CATEGORY LIKE '%ELECTRONICS%';
++------------+--------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME | CATEGORY    | PRICE   |
++------------+--------------+-------------+---------+
+|          1 | LAPTOP       | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE    | ELECTRONICS |   50.00 |
++------------+--------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE CATEGORY LIKE '%ELEC%';
++------------+--------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME | CATEGORY    | PRICE   |
++------------+--------------+-------------+---------+
+|          1 | LAPTOP       | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE    | ELECTRONICS |   50.00 |
++------------+--------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE CATEGORY LIKE '%E%';
++------------+--------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME | CATEGORY    | PRICE   |
++------------+--------------+-------------+---------+
+|          1 | LAPTOP       | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE    | ELECTRONICS |   50.00 |
+|          3 | COFFEE MAKER | APPLIANCES  |   80.00 |
+|          5 | BACKUP       | ACCESSORIES |   40.00 |
++------------+--------------+-------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE CATEGORY LIKE '%O%';
++------------+---------------+-------------+---------+
+| PRODUCT_ID | PRODUCT_NAME  | CATEGORY    | PRICE   |
++------------+---------------+-------------+---------+
+|          1 | LAPTOP        | ELECTRONICS | 1200.00 |
+|          2 | HEADPHONE     | ELECTRONICS |   50.00 |
+|          4 | RUNNING SHOES | CLOTHING    |   75.00 |
+|          5 | BACKUP        | ACCESSORIES |   40.00 |
++------------+---------------+-------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCTS WHERE CATEGORY LIKE '%Z%';
+Empty set (0.00 sec)

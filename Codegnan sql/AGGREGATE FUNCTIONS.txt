@@ -1,0 +1,168 @@
+
+mysql> create database sales;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use sales;
+Database changed
+mysql>  CREATE TABLE ORDERS(
+    -> ORDER ID INT PRIMARY KEY,
+    -> PRODUCT_NAME VARCHAR(50),
+    -> QUANTITY INT,
+    -> PRICE DECIMAL(8,2),
+    -> ORDER_DATE DATE
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER ID INT PRIMARY KEY,
+PRODUCT_NAME VARCHAR(50),
+QUANTITY INT,
+PRICE DECIMAL(' at line 2
+mysql>  CREATE TABLE ORDERS(
+    -> ORDER ID INT PRIMARY KEY,
+    -> PRODUCT_NAME VARCHAR(50),
+    -> QUANTITY INT,
+    -> PRICE DECIMAL(8,2),
+    -> ORDER_DATE DATE
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER ID INT PRIMARY KEY,
+PRODUCT_NAME VARCHAR(50),
+QUANTITY INT,
+PRICE DECIMAL(' at line 2
+mysql>  CREATE TABLE ORDERS(
+    -> ORDER_ID INT PRIMARY KEY,
+    -> PRODUCT_NAME VARCHAR(50),
+    -> QUANTITY INT,
+    -> PRICE DECIMAL(8,2),
+    -> ORDER_DATE DATE
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC ORDERS;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| ORDER_ID     | int          | NO   | PRI | NULL    |       |
+| PRODUCT_NAME | varchar(50)  | YES  |     | NULL    |       |
+| QUANTITY     | int          | YES  |     | NULL    |       |
+| PRICE        | decimal(8,2) | YES  |     | NULL    |       |
+| ORDER_DATE   | date         | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO ORDERS VALUES
+    -> (1, 'WIDGET', 10,20.00, '2024-01-01'),
+    -> (2, 'GADGET', 5, 15.00, '2024-01-02'),
+    -> (3, 'WIDGET', 8, 25.00, '2024-01-03'),
+    -> (4, 'DEVICE', 12, 10.00, '2024-01-03'),
+    -> (5, 'GADGET', 6, 18.00, '2024-01-04');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FORM ORDERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FORM ORDERS' at line 1
+mysql> SELECT * FROM ORDERS;
++----------+--------------+----------+-------+------------+
+| ORDER_ID | PRODUCT_NAME | QUANTITY | PRICE | ORDER_DATE |
++----------+--------------+----------+-------+------------+
+|        1 | WIDGET       |       10 | 20.00 | 2024-01-01 |
+|        2 | GADGET       |        5 | 15.00 | 2024-01-02 |
+|        3 | WIDGET       |        8 | 25.00 | 2024-01-03 |
+|        4 | DEVICE       |       12 | 10.00 | 2024-01-03 |
+|        5 | GADGET       |        6 | 18.00 | 2024-01-04 |
++----------+--------------+----------+-------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS TOTAL_ORDERS
+    -> FROM ORDERS;
++--------------+
+| TOTAL_ORDERS |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT PRODUCT_NAME,
+    -> COUNT(*)  AS TOTAL_ORDERS
+    -> FROM ORDERS
+    -> GROUP BY PRODUCT_NAME;
++--------------+--------------+
+| PRODUCT_NAME | TOTAL_ORDERS |
++--------------+--------------+
+| WIDGET       |            2 |
+| GADGET       |            2 |
+| DEVICE       |            1 |
++--------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY;
+ERROR 1054 (42S22): Unknown column 'QUANTITY' in 'field list'
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY;
+ERROR 1054 (42S22): Unknown column 'QUANTITY' in 'field list'
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY,
+    -> FROM ORDERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ORDERS' at line 3
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY,
+    -> FROM ORDERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ORDERS' at line 3
+mysql> SHOW ERRORS;
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Level | Code | Message
+                                                       |
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Error | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ORDERS' at line 3 |
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY,
+    -> FROM ORDERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ORDERS' at line 3
+mysql> SELECT MIN(QUANTITY) AS MIN_QUANTITY,
+    -> MAX(QUANTITY) AS MAX_QUANTITY
+    -> FROM ORDERS;
++--------------+--------------+
+| MIN_QUANTITY | MAX_QUANTITY |
++--------------+--------------+
+|            5 |           12 |
++--------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT PRODUCT_NAME,
+    -> MIN(PRICE) AS MIN_PRICE,
+    -> MAX(PRICE) AS MAX_PRICE
+    -> FROM ORDERS
+    -> GROUP BY PRODUCT_NAME;
++--------------+-----------+-----------+
+| PRODUCT_NAME | MIN_PRICE | MAX_PRICE |
++--------------+-----------+-----------+
+| WIDGET       |     20.00 |     25.00 |
+| GADGET       |     15.00 |     18.00 |
+| DEVICE       |     10.00 |     10.00 |
++--------------+-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT SUM(QUANTITY) AS TOTAL_QUNATITY,
+    -> AVG(PRICE) AS AVG_PRICE
+    -> FROM ORDERS;
++----------------+-----------+
+| TOTAL_QUNATITY | AVG_PRICE |
++----------------+-----------+
+|             41 | 17.600000 |
++----------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT PRODUCT_NAME,
+    -> SUM(QUANTITY) AS TOTAL_QUANTITY,
+    -> AVG(PRICE)AS AVG_PRICE
+    -> FROM ORDERS
+    -> GROUP BY PRODUCT_NAME;
++--------------+----------------+-----------+
+| PRODUCT_NAME | TOTAL_QUANTITY | AVG_PRICE |
++--------------+----------------+-----------+
+| WIDGET       |             18 | 22.500000 |
+| GADGET       |             11 | 16.500000 |
+| DEVICE       |             12 | 10.000000 |
++--------------+----------------+-----------+
+3 rows in set (0.00 sec)
